@@ -214,6 +214,10 @@ impl<'a, T: SiteBackend> SiteGenerator<'a, T> {
             "theme_main_dark".to_string(),
             serde_json::Value::String(self.config.main_color_dark().to_css_string()),
         );
+        data.insert(
+            "theme_second".to_string(),
+            serde_json::Value::String(self.config.second_color().to_css_string()),
+        )
 
         let mut out = Vec::new();
 

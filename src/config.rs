@@ -158,17 +158,21 @@ static DEFAULT_THEME_COLOR: &str = "#ab000d";
 #[derive(Debug, Clone)]
 struct Colors {
     main: String,
+    second: String
 }
 
 #[derive(Debug, Clone, Deserialize, Default)]
 struct ColorsYaml {
     main: Option<String>,
+    second: Option<String>,
 }
 
 impl From<ColorsYaml> for Colors {
     fn from(other: ColorsYaml) -> Self {
         Colors {
             main: other.main.unwrap_or(DEFAULT_THEME_COLOR.to_owned()),
+            second: other.second.unwrap_or(DEFAULT_THEME_COLOR.to_owned())
+
         }
     }
 }
@@ -177,6 +181,7 @@ impl Default for Colors {
     fn default() -> Self {
         Colors {
             main: DEFAULT_THEME_COLOR.to_owned(),
+            second: DEFAULT_THEME_COLOR.to_owned(),
         }
     }
 }
@@ -365,6 +370,13 @@ impl Config {
     /// Must be a valid HEX color.
     pub fn main_color(&self) -> Rgb {
         let color = &self.colors.main;
+
+        // This was already validated
+        Rgb::from_hex_str(color).unwrap()
+    }
+
+    pub fn second_color(&self) -> Rgb {
+        let color = &self.colors.second;
 
         // This was already validated
         Rgb::from_hex_str(color).unwrap()
